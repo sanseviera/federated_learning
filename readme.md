@@ -62,4 +62,13 @@ N'hésitez pas à utiliser des graphiques pour montrer les résultats !
     dans quelle situation et pourquoi ?
 
 
+`
+python client.py --node_id 0 --data_split iid
+`
+
+`
+python client_mal.py --node_id 1 --data_split iid
+`
+
+
 *Remarque finale : Assurez-vous d'inclure votre nom pour l'attaque que vous avez choisi de travailler dans le rapport.*

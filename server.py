@@ -20,7 +20,7 @@ parser.add_argument(
 )
 rounds = parser.parse_args().round
 
-metrics_path = "results.txt"
+metrics_path = "results_defenses.txt"
 if os.path.exists(metrics_path):
     os.remove(metrics_path)
 
@@ -107,11 +107,35 @@ def fit_config(server_round:int):
     return config
 
 
-strategy = fl.server.strategy.FedAvg(
+"""strategy = fl.server.strategy.FedAvg(
+    on_fit_config_fn=fit_config,
+    on_evaluate_config_fn=fit_config,
+    evaluate_fn=evaluate_function(),
+)"""
+
+strategy = fl.server.strategy.FedMedian(
+    fraction_fit=1.0,
+    fraction_evaluate=1.0,
+    min_fit_clients=2,
+    min_evaluate_clients=2,
+    min_available_clients=2,
     on_fit_config_fn=fit_config,
     on_evaluate_config_fn=fit_config,
     evaluate_fn=evaluate_function(),
 )
+
+"""strategy = fl.server.strategy.FedTrimmedAvg(
+    fraction_fit=1.0,
+    fraction_evaluate=1.0,
+    min_fit_clients=2,
+    min_evaluate_clients=2,
+    min_available_clients=2,
+    fraction_trim=0.1,         # Le pourcentage (0.1 = 10%) à tronquer en haut et en bas
+    on_fit_config_fn=fit_config,
+    on_evaluate_config_fn=fit_config,
+    evaluate_fn=evaluate_function(),
+)"""
+
 
 fl.server.start_server(
     server_address="0.0.0.0:8080",
