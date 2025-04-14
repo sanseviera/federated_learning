@@ -5,6 +5,7 @@ TOTAL_CLIENTS=5
 NUM_ATTACKERS=1
 ATTACK_TYPE="label_model_poisoning"
 NUM_ROUNDS=10  # <--- Nombre d’époques (rounds) du serveur
+STRATEGY="avg"  # Valeur par défaut: "avg" (FedAvg)
 
 # Lecture des arguments
 if [ $# -ge 1 ]; then
@@ -19,9 +20,12 @@ fi
 if [ $# -ge 4 ]; then
   NUM_ROUNDS=$4
 fi
+if [ $# -ge 5 ]; then
+  STRATEGY=$5
+fi
 
-echo "Lancement du serveur avec $NUM_ROUNDS rounds"
-python server.py --round $NUM_ROUNDS  &
+echo "Lancement du serveur avec $NUM_ROUNDS rounds, type d'attaque : $ATTACK_TYPE et stratégie: $STRATEGY"
+python server.py --round $NUM_ROUNDS --strategy $STRATEGY &
 sleep 3  # Laisse le temps au serveur de démarrer
 
 # Lancement des clients

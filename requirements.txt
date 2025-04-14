@@ -1,0 +1,11 @@
+pathspec==0.12.1
+protobuf==4.25.6
+pycparser==2.22
+pycryptodome==3.22.0
+Pygments==2.19.1
+PyYAML==6.0.2
+shellingham==1.5.4
+tomli==2.2.1
+tomli_w==1.2.0
+typing_extensions==4.13.2
+urllib3==2.4.0
