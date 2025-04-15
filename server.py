@@ -18,9 +18,18 @@ parser.add_argument(
     default=10,
     help="Partition of the dataset divided into 3 iid partitions created artificially.",
 )
-rounds = parser.parse_args().round
+parser.add_argument(
+    "--strategy",
+    type=str,
+    default="avg",  # Valeur par défaut
+    help="Choose a defense strategy: [avg, median, trimmedavg]",
+)
+#rounds = parser.parse_args().round
+args = parser.parse_args()
+rounds = args.round
+chosen_strategy = args.strategy
 
-metrics_path = "results.txt"
+metrics_path = "results_defenses.txt"
 if os.path.exists(metrics_path):
     os.remove(metrics_path)
 
@@ -107,11 +116,73 @@ def fit_config(server_round:int):
     return config
 
 
-strategy = fl.server.strategy.FedAvg(
+"""strategy = fl.server.strategy.FedAvg(
     on_fit_config_fn=fit_config,
     on_evaluate_config_fn=fit_config,
     evaluate_fn=evaluate_function(),
 )
+
+strategy = fl.server.strategy.FedMedian(
+    fraction_fit=1.0,
+    fraction_evaluate=1.0,
+    min_fit_clients=2,
+    min_evaluate_clients=2,
+    min_available_clients=2,
+    on_fit_config_fn=fit_config,
+    on_evaluate_config_fn=fit_config,
+    evaluate_fn=evaluate_function(),
+)
+
+strategy = fl.server.strategy.FedTrimmedAvg(
+    fraction_fit=1.0,
+    fraction_evaluate=1.0,
+    min_fit_clients=2,
+    min_evaluate_clients=2,
+    min_available_clients=2,
+    fraction_trim=0.2,
+    on_fit_config_fn=fit_config,
+    on_evaluate_config_fn=fit_config,
+    evaluate_fn=evaluate_function(),
+)"""
+
+# 3) Choix de la stratégie selon l'argument --strategy
+if chosen_strategy == "avg":
+    strategy = fl.server.strategy.FedAvg(
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(),
+    )
+elif chosen_strategy == "median":
+    strategy = fl.server.strategy.FedMedian(
+        fraction_fit=1.0,
+        fraction_evaluate=1.0,
+        min_fit_clients=2,
+        min_evaluate_clients=2,
+        min_available_clients=2,
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(),
+    )
+elif chosen_strategy == "trimmedavg":
+    strategy = fl.server.strategy.FedTrimmedAvg(
+        fraction_fit=1.0,
+        fraction_evaluate=1.0,
+        min_fit_clients=2,
+        min_evaluate_clients=2,
+        min_available_clients=2,
+        fraction_trim=0.2,  # Tronquer 20% (10% haut, 10% bas) => total 20
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(),
+    )
+else:
+    # Valeur par défaut si mal orthographié
+    print(f"Strategy '{chosen_strategy}' not recognized, defaulting to FedAvg")
+    strategy = fl.server.strategy.FedAvg(
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(),
+    )
 
 fl.server.start_server(
     server_address="0.0.0.0:8080",
