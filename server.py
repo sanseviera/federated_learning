@@ -18,9 +18,25 @@ parser.add_argument(
     default=10,
     help="Partition of the dataset divided into 3 iid partitions created artificially.",
 )
-rounds = parser.parse_args().round
+parser.add_argument(
+    "--strategy",
+    type=str,
+    default="avg",  # Valeur par défaut
+    help="Choose a defense strategy: [avg, median, trimmedavg]",
+)
+parser.add_argument(
+    "--data_split",
+    type=str,
+    default="iid",  # ou "non_iid_class"
+    help="Type de partition des données pour le serveur (iid ou non_iid_class)"
+)
+#rounds = parser.parse_args().round
+args = parser.parse_args()
+rounds = args.round
+chosen_strategy = args.strategy
+data_split = args.data_split
 
-metrics_path = "results.txt"
+metrics_path = "results_defenses.txt"
 if os.path.exists(metrics_path):
     os.remove(metrics_path)
 
@@ -60,13 +76,14 @@ def test(net, testloader):
 
 
 # The `evaluate` function will be by Flower called after every round
-def evaluate_function():
+def evaluate_function(data_split):
     def evaluate(server_round, parameters, config):
         net = Net().to(DEVICE)
         params_dict = zip(net.state_dict().keys(), parameters)
         state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
         net.load_state_dict(state_dict, strict=True)
-        _ ,_ , testloader = prepare_dataset.load_datasets(2, "CIFAR10", "iid")
+        #_ ,_ , testloader = prepare_dataset.load_datasets(2, "CIFAR10", "iid")
+        _ ,_ , testloader = prepare_dataset.load_datasets(2, "CIFAR10", data_split)
         loss, accuracy = test(net, testloader)
 
         with open(metrics_path, "a") as f:
@@ -107,11 +124,72 @@ def fit_config(server_round:int):
     return config
 
 
-strategy = fl.server.strategy.FedAvg(
+"""strategy = fl.server.strategy.FedAvg(
     on_fit_config_fn=fit_config,
     on_evaluate_config_fn=fit_config,
     evaluate_fn=evaluate_function(),
 )
+
+strategy = fl.server.strategy.FedMedian(
+    fraction_fit=1.0,
+    fraction_evaluate=1.0,
+    min_fit_clients=2,
+    min_evaluate_clients=2,
+    min_available_clients=2,
+    on_fit_config_fn=fit_config,
+    on_evaluate_config_fn=fit_config,
+    evaluate_fn=evaluate_function(),
+)
+
+strategy = fl.server.strategy.FedTrimmedAvg(
+    fraction_fit=1.0,
+    fraction_evaluate=1.0,
+    min_fit_clients=2,
+    min_evaluate_clients=2,
+    min_available_clients=2,
+    fraction_trim=0.2,
+    on_fit_config_fn=fit_config,
+    on_evaluate_config_fn=fit_config,
+    evaluate_fn=evaluate_function(),
+)"""
+
+# 3) Choix de la stratégie selon l'argument --strategy
+if chosen_strategy == "avg":
+    strategy = fl.server.strategy.FedAvg(
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(data_split),
+    )
+elif chosen_strategy == "median":
+    strategy = fl.server.strategy.FedMedian(
+        fraction_fit=1.0,
+        fraction_evaluate=1.0,
+        min_fit_clients=2,
+        min_evaluate_clients=2,
+        min_available_clients=2,
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(data_split),
+    )
+elif chosen_strategy == "trimmedavg":
+    strategy = fl.server.strategy.FedTrimmedAvg(
+        fraction_fit=1.0,
+        fraction_evaluate=1.0,
+        min_fit_clients=2,
+        min_evaluate_clients=2,
+        min_available_clients=2,
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(data_split),
+    )
+else:
+    # Valeur par défaut si mal orthographié
+    print(f"Strategy '{chosen_strategy}' not recognized, defaulting to FedAvg")
+    strategy = fl.server.strategy.FedAvg(
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(data_split),
+    )
 
 fl.server.start_server(
     server_address="0.0.0.0:8080",

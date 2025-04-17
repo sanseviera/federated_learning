@@ -1,0 +1,5 @@
+flwr==1.15.2
+torch==2.0.1
+tqdm==4.66.2
+argparse
+numpy>=1.26.0,<2.0
