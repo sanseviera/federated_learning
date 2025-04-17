@@ -5,10 +5,15 @@ import os
 #DOSSIER = "./result/defense_FedTrimmedAvg/label_flipping/mean/"
 #DOSSIER = "./result/defense_FedTrimmedAvg/poisoning/mean/"
 
-DOSSIER = "./result/defense_FedMedian/poisoning/std/"
+#DOSSIER = "./result/defense_FedMedian/poisoning/std/"
 #DOSSIER = "./result/defense_FedMedian/label_flipping/std/"
 #DOSSIER = "./result/defense_FedTrimmedAvg/label_flipping/std/"
 #DOSSIER = "./result/defense_FedTrimmedAvg/poisoning/std/"
+
+#DOSSIER = "./result/defense_FedMedian/non-iid/poisoning/std/"
+#DOSSIER = "./result/defense_FedMedian/non-iid/poisoning/mean/"
+#DOSSIER = "./result/defense_FedMedian/non-iid/label_flipping/mean/"
+DOSSIER = "./result/defense_FedMedian/non-iid/label_flipping/std/"
 
 OUTPUT_TEX = "graphique_fedmedian.tex"
 

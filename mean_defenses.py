@@ -14,8 +14,18 @@ DOSSIER_OUT = "./result/defense_FedTrimmedAvg/label_flipping/mean"
 DOSSIER_OUT = "./result/defense_FedMedian/poisoning/mean"
 """
 
+"""
 DOSSIER = "./result/defense_FedMedian/label_flipping/"
 DOSSIER_OUT = "./result/defense_FedMedian/label_flipping/mean"
+"""
+
+"""
+DOSSIER = "./result/defense_FedMedian/non-iid/label_flipping/"
+DOSSIER_OUT = "./result/defense_FedMedian/non-iid/label_flipping/mean"
+"""
+
+DOSSIER = "./result/defense_FedMedian/non-iid/poisoning/"
+DOSSIER_OUT = "./result/defense_FedMedian/non-iid/poisoning/mean"
 
 fichiers = glob.glob(os.path.join(DOSSIER, "*.txt"))
 

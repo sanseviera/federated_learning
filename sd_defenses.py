@@ -16,8 +16,18 @@ DOSSIER_OUT = "./result/defense_FedTrimmedAvg/label_flipping/std"
 DOSSIER_OUT = "./result/defense_FedMedian/poisoning/std"
 """
 
+"""
 DOSSIER = "./result/defense_FedMedian/label_flipping/"
 DOSSIER_OUT = "./result/defense_FedMedian/label_flipping/std"
+"""
+
+DOSSIER = "./result/defense_FedMedian/non-iid/label_flipping/"
+DOSSIER_OUT = "./result/defense_FedMedian/non-iid/label_flipping/std"
+
+"""
+DOSSIER = "./result/defense_FedMedian/non-iid/poisoning/"
+DOSSIER_OUT = "./result/defense_FedMedian/non-iid/poisoning/std"
+"""
 
 
 os.makedirs(DOSSIER_OUT, exist_ok=True)
@@ -62,4 +72,19 @@ for prefix, fichiers_groupes in groupes.items():
             std_autre = ecart_type(autres[index])
             f_out.write(f"   & {index} & {std_valeur:.10f} & {std_autre:.4f} \\\\\n")
 
-    print(f"[OK] Écart-type généré pour: {prefix} => {prefix}_std.txt")
+    print(f"[OK] Écart-type généré pour: {prefix} => {prefix}.txt")
+
+
+"""elif chosen_strategy == "trimmedavg":
+    strategy = fl.server.strategy.FedTrimmedAvg(
+        fraction_fit=1.0,
+        fraction_evaluate=1.0,
+        min_fit_clients=2,
+        min_evaluate_clients=2,
+        min_available_clients=2,
+        #fraction_trim=0.2,  # Tronquer 20% (10% haut, 10% bas) => total 20
+        fraction_to_trim=0.2,
+        on_fit_config_fn=fit_config,
+        on_evaluate_config_fn=fit_config,
+        evaluate_fn=evaluate_function(data_split),
+    )"""

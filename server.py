@@ -178,7 +178,6 @@ elif chosen_strategy == "trimmedavg":
         min_fit_clients=2,
         min_evaluate_clients=2,
         min_available_clients=2,
-        fraction_trim=0.2,  # Tronquer 20% (10% haut, 10% bas) => total 20
         on_fit_config_fn=fit_config,
         on_evaluate_config_fn=fit_config,
         evaluate_fn=evaluate_function(data_split),
