@@ -1,0 +1,77 @@
+\begin{center}
+\begin{tikzpicture}
+    \begin{groupplot}[
+        group style={group size=2 by 1, horizontal sep=1.5cm},
+        width=8cm, height=6cm,
+        xlabel={$Iteration$}, ylabel={$Valeur$}, grid=major,
+        legend style={font=\scriptsize, at={(0.5,-0.3)}, anchor=north, legend columns=1}
+    ]
+\nextgroupplot[title={Fonction de perte (Loss)}]
+\addplot[smooth,mark=*,color=black] coordinates {
+    (0,721.3883749962) (1,610.6948368549) (2,523.5589593887) (3,473.6184252024) (4,447.6968986273) (5,430.5092664242) (6,417.8551312804) (7,401.4814354181) (8,392.5651055336) (9,383.7771269441) (10,375.8935124397)
+};
+\addlegendentry{5 clients honnêtes}
+\addplot[smooth,mark=*,color=black] coordinates {
+    (0,721.4311165333) (1,719.1480763912) (2,712.5453955173) (3,701.4887919426) (4,692.9431799889) (5,688.0599104404) (6,683.5314184666) (7,682.4808504581) (8,677.8645103931) (9,675.4967316628) (10,673.3409050226)
+};
+\addlegendentry{5 clients honnêtes- non\_iid}
+\addplot[smooth,mark=*,color=orange] coordinates {
+    (0,721.4980476379) (1,604.1343898058) (2,512.2546943903) (3,469.4140345335) (4,445.4317155719) (5,425.9477179050) (6,413.1961044431) (7,400.2462034702) (8,387.8578744531) (9,381.2746578097) (10,371.3740264773)
+};
+\addlegendentry{4 clients honnêtes et 1 client malhonête}
+\addplot[smooth,mark=*,color=orange] coordinates {
+    (0,721.4478571415) (1,719.8923091412) (2,712.4096796513) (3,700.4862124920) (4,692.2803960323) (5,686.4514128685) (6,680.5550855637) (7,677.1209750652) (8,672.9602105141) (9,670.5336178541) (10,668.6565694571)
+};
+\addlegendentry{4 clients honnêtes et 1 client malhonête- non\_iid}
+\addplot[smooth,mark=*,color=green] coordinates {
+    (0,721.2701668739) (1,607.9176374674) (2,521.7227063894) (3,474.4129076004) (4,447.1440052032) (5,431.4254019976) (6,415.8592773914) (7,402.8503274202) (8,390.7574708939) (9,382.4522690058) (10,377.2276215196)
+};
+\addlegendentry{3 clients honnêtes et 2 clients malhonêtes}
+\addplot[smooth,mark=*,color=green] coordinates {
+    (0,721.2402112007) (1,719.8152825832) (2,712.2309080124) (3,703.6162664413) (4,693.7579245090) (5,688.4762460709) (6,684.6927767754) (7,680.5744321823) (8,678.4831926346) (9,676.7529058933) (10,674.8396886349)
+};
+\addlegendentry{3 clients honnêtes et 2 clients malhonêtes- non\_iid}
+\addplot[smooth,mark=*,color=red] coordinates {
+    (0,721.3696701050) (1,600.1145508766) (2,509.9144678354) (3,469.7767225266) (4,448.4978130937) (5,429.1183804631) (6,416.6770437241) (7,401.5801863194) (8,392.8037882209) (9,382.2938812971) (10,377.1399636030)
+};
+\addlegendentry{2 clients honnêtes et 3 clients malhonêtes}
+\addplot[smooth,mark=*,color=red] coordinates {
+    (0,721.4968822956) (1,720.5306755543) (2,714.9592391491) (3,703.6194646358) (4,696.3630830765) (5,691.6299793720) (6,687.1735844612) (7,683.7370357037) (8,682.0087164402) (9,679.1391104221) (10,678.0164750099)
+};
+\addlegendentry{2 clients honnêtes et 3 clients malhonêtes- non\_iid}
+\nextgroupplot[title={\text{{Précision (Accuracy)}}}]
+\addplot[smooth,mark=*,color=black] coordinates {
+    (0,0.0994000000) (1,0.2814000000) (2,0.3825000000) (3,0.4456000000) (4,0.4779000000) (5,0.5034000000) (6,0.5195000000) (7,0.5405000000) (8,0.5537000000) (9,0.5644000000) (10,0.5744000000)
+};
+\addlegendentry{5 clients honnêtes}
+\addplot[smooth,mark=*,color=black] coordinates {
+    (0,0.1017000000) (1,0.1217000000) (2,0.1603000000) (3,0.1910000000) (4,0.2094000000) (5,0.2324000000) (6,0.2546000000) (7,0.2619000000) (8,0.2786000000) (9,0.2840000000) (10,0.2912000000)
+};
+\addlegendentry{5 clients honnêtes- non\_iid}
+\addplot[smooth,mark=*,color=orange] coordinates {
+    (0,0.0989000000) (1,0.2935000000) (2,0.4036000000) (3,0.4549000000) (4,0.4839000000) (5,0.5092000000) (6,0.5288000000) (7,0.5418000000) (8,0.5593000000) (9,0.5671000000) (10,0.5800000000)
+};
+\addlegendentry{4 clients honnêtes et 1 client malhonête}
+\addplot[smooth,mark=*,color=orange] coordinates {
+    (0,0.1006000000) (1,0.1190000000) (2,0.1529000000) (3,0.2024000000) (4,0.2221000000) (5,0.2426000000) (6,0.2633000000) (7,0.2618000000) (8,0.2799000000) (9,0.2845000000) (10,0.2891000000)
+};
+\addlegendentry{4 clients honnêtes et 1 client malhonête- non\_iid}
+\addplot[smooth,mark=*,color=green] coordinates {
+    (0,0.1000000000) (1,0.2864000000) (2,0.3879000000) (3,0.4457000000) (4,0.4818000000) (5,0.5050000000) (6,0.5257000000) (7,0.5390000000) (8,0.5566000000) (9,0.5665000000) (10,0.5752000000)
+};
+\addlegendentry{3 clients honnêtes et 2 clients malhonêtes}
+\addplot[smooth,mark=*,color=green] coordinates {
+    (0,0.1011000000) (1,0.1041000000) (2,0.1579000000) (3,0.1721000000) (4,0.1968000000) (5,0.2205000000) (6,0.2344000000) (7,0.2559000000) (8,0.2623000000) (9,0.2703000000) (10,0.2877000000)
+};
+\addlegendentry{3 clients honnêtes et 2 clients malhonêtes- non\_iid}
+\addplot[smooth,mark=*,color=red] coordinates {
+    (0,0.0997000000) (1,0.3006000000) (2,0.4052000000) (3,0.4496000000) (4,0.4785000000) (5,0.5054000000) (6,0.5212000000) (7,0.5398000000) (8,0.5503000000) (9,0.5649000000) (10,0.5717000000)
+};
+\addlegendentry{2 clients honnêtes et 3 clients malhonêtes}
+\addplot[smooth,mark=*,color=red] coordinates {
+    (0,0.0977000000) (1,0.1119000000) (2,0.1445000000) (3,0.1674000000) (4,0.1870000000) (5,0.2087000000) (6,0.2361000000) (7,0.2356000000) (8,0.2490000000) (9,0.2586000000) (10,0.2704000000)
+};
+\addlegendentry{2 clients honnêtes et 3 clients malhonêtes- non\_iid}
+\end{groupplot}
+\end{tikzpicture}
+\end{center}
