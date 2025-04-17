@@ -1,8 +1,8 @@
 # Choisir ici : "loss" ou "accuracy"
-mode = "loss"
+mode = "accuracy"
 
 # Chemin vers le fichier d'entrée
-fichier = "./result/total/label_flip_3.txt"
+fichier = "./result/total/model_pois_3_ecart_type.txt"
 
 # Lecture et extraction des données
 coordinates = []

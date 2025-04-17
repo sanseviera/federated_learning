@@ -29,9 +29,9 @@ for ((i=0; i<$TOTAL_CLIENTS; i++)); do
   echo "Lancement du client $i"
   if [ $i -ge $(($TOTAL_CLIENTS - $NUM_ATTACKERS)) ]; then
     echo "Client $i est un attaquant ($ATTACK_TYPE)"
-    python client_mal.py --node_id $i --attack_type $ATTACK_TYPE --n $TOTAL_CLIENTS &
+    python client_mal.py --node_id $i --attack_type $ATTACK_TYPE --n $TOTAL_CLIENTS --data_split non_iid_class &
   else
-    python client.py --node_id $i --n $TOTAL_CLIENTS &
+    python client.py --node_id $i --n $TOTAL_CLIENTS --data_split non_iid_class &
   fi
 done
 

@@ -65,6 +65,8 @@ def train(net, trainloader, epochs, attack_type):
                 for param in net.parameters():
                     if param.grad is not None:
                         param.grad *= -1
+                        param.grad = torch.clamp(param.grad, -1.0, 1.0)
+
             
             optimizer.step()
 

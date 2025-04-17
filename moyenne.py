@@ -1,7 +1,7 @@
 import glob
 
 # Dossier contenant tes fichiers (modifie le chemin selon besoin)
-fichiers = glob.glob("./result/label_flip_3/*.txt")
+fichiers = glob.glob("./result/normal_up/*.txt")
 
 # Dictionnaires pour stocker les sommes et le compte par index
 somme_valeurs = {}
